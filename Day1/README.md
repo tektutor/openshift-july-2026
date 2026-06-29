@@ -241,5 +241,11 @@ docker start c1-jegan
 docker ps | grep c1-jegan
 ```
 
+## Lab - Retart a running container
+```
+docker ps a | grep c1-jegan
+docker restart c1-jegan
+docker ps | grep c1-jegan
+```
 
 
