@@ -194,7 +194,7 @@ cd custom-docker-image
 touch Dockerfile
 ```
 
-Add the below content to your Dockerfile
+Add the below content to your Dockerfile, you can run gedit to open windows notepad like editor
 <pre>
 FROM ubuntu:26.04
 
@@ -225,4 +225,13 @@ List and see the container should still run because we created this container in
 ```
 docker ps
 ```
+
+## Lab - Stopping a running container
+```
+docker ps | grep c1-jegan
+docker stop c1-jegan
+docker ps | grep c1-jegan
+```
+
+
 
