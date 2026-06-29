@@ -43,6 +43,13 @@
 - all the containers that runs on top a OS shares the Hardware resources available on the underlying OS
 - containers will never be able to replace an Operating System or Virtualization
 - in fact, in real-world scenarios, virtualization and containerization are used in combination
+- it is a linux technology
+- linux kernel features that enables containerization
+  1. Namespace
+     - helps isolation of containers from each other
+  2. Control Groups (CGroups )
+     - it helps us apply resource quota restrictions like
+       - we can restrict how much RAM, disk and cpu can be utilized by a container
 - container runtime
   - is a low-level software that manages container images and containers
   - it is not user-friendly, hence end-user like us never use container runtime directly
@@ -56,4 +63,29 @@
   - examples
     - docker
     - podman
+</pre>
+
+## Info - Hypervisor High-Level Architecture
+
+## Info - Docker High-Level Architecture
+
+
+## Info - Docker image
+<pre>
+- is a blueprint of a docker container
+- you can imagine docker image similar to Window12.iso (OS Image) or Ubuntu24.04.iso(OS Image)
+- with the help of a docker image, we can create any number of docker containers
+- docker images => typically has one application and its dependencies ( libraries, dependent tools, etc., )
+- docker images are conservatively built, which means it only contains bare minimum tools required to run a specific appliction
+- every docker images gets a unique name and unique id ( 256-bit HASH )
+</pre>
+
+## Info - Docker Container
+<pre>
+- is the running instance of a Docker Image ( Container Image )
+- each container gets a unique name and ID (SHA Hash)
+- each container gets its own dedicated software defined network stack ( 7 OSI Layers )
+- each container get its own file system ( files & folders )
+- each container uses about 7 namespaces
+- each container gets one or more IP addresses ( generally Private IP )
 </pre>
