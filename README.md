@@ -12,6 +12,7 @@ We have got two servers with below configurations
 - Intel Xeon Processor with 192 CPU Cores
 - 1 TB RAM
 - 21 TB HDD
+</pre>
 
 #### Server 1 (192.168.10.200)
 ![Server1](server1.png)
