@@ -278,12 +278,16 @@ docker ps
 docker image inspect ubuntu:26.04
 ```
 <img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/b4757865-3844-4dbc-a279-662ac54ff169" />
+<img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/e98ec6f7-8c49-43df-b99a-ce4c90c3fbdb" />
 
 ## Lab - Finding details about a container
 ```
 docker container inspect c1-jegan
 docker inspect c1-jegan
 ```
+<img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/a892c119-4f3d-4640-a0c8-d6311b37378e" />
+<img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/1abe5b7a-45f8-4c5b-a288-434ad8d65f78" />
+
 
 ## Lab - Finding IP address of a container
 ```
@@ -291,4 +295,5 @@ docker inspect c1-jegan | grep IPA
 docker inspect -f {{.NetworkSettings.IPAddress}} c1-jegan
 docker exec -it c1-jegan hostname -i
 ```
+<img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/9bb4c003-09fa-462c-991f-f8a646ede2fd" />
 
