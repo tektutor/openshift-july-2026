@@ -272,3 +272,23 @@ docker rename zealous_montalcini c2-jegan
 docker ps
 ```
 <img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/376e7c47-8709-4ca7-a1a8-697cce371b0e" />
+
+## Lab - Finding details about a container image
+```
+docker image inspect ubuntu:26.04
+```
+<img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/b4757865-3844-4dbc-a279-662ac54ff169" />
+
+## Lab - Finding details about a container
+```
+docker container inspect c1-jegan
+docker inspect c1-jegan
+```
+
+## Lab - Finding IP address of a container
+```
+docker inspect c1-jegan | grep IPA
+docker inspect -f {{.NetworkSettings.IPAddress}} c1-jegan
+docker exec -it c1-jegan hostname -i
+```
+
