@@ -393,3 +393,16 @@ http://localhost:8080
 <img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/139d4de4-4dae-4d8e-b3d1-00916d679a69" />
 <img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/ebc44367-2905-4d4a-bc89-3303a80fc9e3" />
 
+Checking the load balancer logs
+```
+docker logs lb-jegan
+```
+<img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/cd6c29ae-4ce5-42dd-bb82-dd338720309b" />
+
+Checking the webserver logs
+```
+docker logs nginx1-jegan
+docker logs nginx2-jegan
+docker logs nginx3-jegan
+```
+<img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/b5672d4f-5e9f-4c4f-ac7a-10722d825f0e" />
