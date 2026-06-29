@@ -144,3 +144,12 @@ docker images
 ```
 <img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/80aca764-71d4-4789-bcfb-f7ba902d7e3f" />
 
+## Lab - Downloading docker images from docker hub to local registry
+```
+docker pull hello-world:latest
+docker pull ubuntu:latest
+
+docker images
+```
+
+<img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/9f094fc2-908d-4fc4-be73-fdffd8b30fc0" />
