@@ -1,4 +1,4 @@
-# Day 1
+<img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/50065a90-64c4-4888-ae4d-5393cfa3fad8" /># Day 1
 
 ## Info - Hypervisor Overview
 <pre>
@@ -153,3 +153,11 @@ docker images
 ```
 
 <img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/9f094fc2-908d-4fc4-be73-fdffd8b30fc0" />
+
+## Lab - Deleting a docker image from your local registry
+```
+docker images | grep hello
+docker rmi hello-world:latest
+docker images | grep hello
+```
+<img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/cacaa967-c82b-4967-8726-7c816c99a112" />
