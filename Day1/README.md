@@ -355,6 +355,36 @@ cat nginx.conf
 You need find the IP addresses of your nginx web server containers and update the nginx.conf file as shown below
 <img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/9a1de32a-3915-4750-aa49-4d85cccba04a" />
 
+You need to update the nginx.conf file with your web server IPs
+```
+user  nginx;
+worker_processes  auto;
+
+error_log  /var/log/nginx/error.log notice;
+pid        /run/nginx.pid;
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    upstream myapp1 {
+        server 172.17.0.2:80;
+        server 172.17.0.3:80;
+        server 172.17.0.4:80;
+    }
+
+    server {
+        listen 80;
+
+        location / {
+            proxy_pass http://myapp1;
+        }
+    }
+}
+
+```
+
 We need to copy this updated nginx.conf file from our local machine to the lb-jegan container
 ```
 docker cp nginx.conf lb-jegan:/etc/nginx/nginx.conf
