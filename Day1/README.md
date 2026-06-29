@@ -23,4 +23,22 @@
        - VMWare Wokstation ( Free - after Broadcom acquired VMWare - Windows, Linux, Mac )
        - VMWare Fusion ( Mac OS-X - Need a commercial license )
        - Parallels ( Mac OS-X - Need a commercial license )
+- virtualization helps organization save cost in many fold
+  - with less physical servers, many virtual machines(Guest OS) can be supported
+  - saves cost in terms of procuring less physical servers
+  - saves cost in terms of power consumption
+  - saves cost in terms of Air Condition 
+  - saves cost in terms of Sound proofing
+  - saves cost in terms of Real estate rental/leasing
+- this type of virtualization is called heavy-weight 
+  - because each VM requires dedicated Hardware resources
+  - each VM runs a fully functional OS with its own dedicated OS Kernel
+- each VM, represents one fully function Operating System
+</pre>
+
+## Info - Containerization
+<pre>
+- application virtualization technology
+- it is light weight, because each container represents a single application not an Operating System
+- all the containers that runs on top a OS shares the Hardware resources available on the underlying OS
 </pre>
