@@ -161,3 +161,15 @@ docker rmi hello-world:latest
 docker images | grep hello
 ```
 <img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/cacaa967-c82b-4967-8726-7c816c99a112" />
+
+## Lab - Creating a container in the interactive(foreground) mode
+```
+docker run -it --name ubuntu1-jegan --hostname ubuntu1-jegan ubuntu:latest /bin/bash
+```
+
+List all running containers
+```
+docker ps | grep jegan
+```
+
+<img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/068a94a2-0d61-4f58-929c-ad85c9864bb9" />
