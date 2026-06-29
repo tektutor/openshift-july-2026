@@ -68,6 +68,7 @@
 ## Info - Hypervisor High-Level Architecture
 
 ## Info - Docker High-Level Architecture
+<img width="1288" height="1096" alt="image" src="https://github.com/user-attachments/assets/170775be-35b9-4ad4-be68-ab524b7d52a0" />
 
 
 ## Info - Docker image
