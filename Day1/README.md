@@ -498,7 +498,7 @@ docker rm -f mysql-jegan
 Hence, we must always store application data in an external storage.
 
 ```
-mkidr -p /tmp/jegan/mysql
+mkdir -p /tmp/jegan/mysql
 docker run -d --name mysql-jegan --hostname mysql-jegan -e MYSQL_ROOT_PASSWORD=root@123 -v /tmp/jegan/mysql:/var/lib/mysql mysql:latest
 docker exec -it mysql-jegan /bin/sh
 mysql -u root -p
