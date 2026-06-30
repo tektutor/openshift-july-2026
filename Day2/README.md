@@ -322,3 +322,14 @@ curl http://localhost:9090
 # Press Ctrl+C in Terminal 1
 # From Terminal 2, curl will no more work
 ```
+
+## Lab - Getting inside a pod shell
+```
+oc project jegan-project
+oc get pods
+oc rsh pod/nginx-dbfb56c96-wtbp7
+exit
+
+oc rsh deploy/nginx
+exit
+```
