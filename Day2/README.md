@@ -111,9 +111,15 @@
 ## Info - Pod
 <pre>
 - Pod is a logical grouping of related containers
+- Pod is record stored in etcd database
+  - is a configuration object stored in etcd database
+  - what really runs on nodes is containers
 - Unlike Docker container where each container get a dedicated IP address, in case of Pod, all containers
-  that are part of a Pod they all share the same IP address
+  that are part of a Pod they all share the same Private IP address
 - applications runs with a Pod container
+- Every Pod get its own port range i.e 0 to 65535
+- if there are two container c1 and c2 within Pod P1, if c1 is using port 8080 then c2 won't be able to use port 8080
+- the containers within the same Pod, they can communicate with each with regular IPC mechanisms
 </pre>
 
 ## Info - Types of applications that can be deployed into Openshift
