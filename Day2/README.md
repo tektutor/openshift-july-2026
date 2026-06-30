@@ -328,8 +328,8 @@ curl http://localhost:9090
 oc get nodes
 oc debug node/master01.ocp4.palmeto.org
 chroot /host
-podman version
-crictl version
+podman --version
+crictl --version
 crictl images
 crictl ps
 exit
