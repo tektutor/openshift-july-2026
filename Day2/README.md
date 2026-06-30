@@ -137,6 +137,54 @@
 </pre>
 
 
+## Info - API Server
+<pre>
+- is the heart of kubernetes/openshift
+- anything and everything in Kubernetes/Openshift is co-ordinated by API server, hence this is
+  one of the most critical components
+- API server only performs database activities like
+  - it creates a new record in etcd datastore
+  - it updates an existing record in the etcd datastore
+  - it retrieves an existing record from the etcd datastore
+  - it deletes an existing record from the etcd datastore
+  - everytime some new record are added, existing records updated, existing records deleted it will
+    send events to registered controllers
+</pre>
+
+## Info - etcd
+<pre>
+- it is distributed database which stores data in key/value format
+- it is an idendepent opensource project used by Kubernetes & openshift
+- this can be used outside the scope of K8s/Openshift as well
+</pre>
+
+## Info - Scheduler
+<pre>
+- is a Pod
+- is one of the Control Plane components that runs in the master node
+- it is responsible to identify a healthy node where a new Pod can be deployed
+- scheduler by itself can't deploy a pod into any node, it is allowed only to share it scheduling
+  recommendations to API Server via REST call
+</pre>
+
+## Info - Controller Managers
+<pre>
+- the real doers are controllers
+- is a collection of many in-built controllers
+- for each type of resource supported in Openshift/Kubernetes there is one Controller
+- For example
+  - Deployment Controller manages Deployment resource ( stateless application )
+  - ReplicaSet Controller manages ReplicaSet resource
+  - Job Controller manages Job resource
+  - StatefulSet Controller manages Statefult resource ( stateful application )
+  - DaemonSet Controller manages DaemonSet resource
+- Controller is a application that runs within a Pod container
+- they have unrestricted access within the Kubernetes/Openshift cluster
+- they can monitor specific type of resources created/updated/deleted under any project within the cluster
+- they get notified by API Server via events
+- Controllers if it needs to communicate something to API Server, it make a REST API call
+</pre>
+
 ## Lab - Login to openshift from command-line
 ```
 cat ~/openshift.txt
