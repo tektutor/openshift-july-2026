@@ -501,5 +501,32 @@ Hence, we must always store application data in an external storage.
 mkidr -p /tmp/jegan/mysql
 docker run -d --name mysql-jegan --hostname mysql-jegan -e MYSQL_ROOT_PASSWORD=root@123 -v /tmp/jegan/mysql:/var/lib/mysql mysql:latest
 docker exec -it mysql-jegan /bin/sh
-
+mysql -u root -p
+SHOW DATABASES;
+CREATE DATABASE tektutor;
+USE tektutor;
+CREATE TABLE trainings ( id INT NOT NULL, name VARCHAR(200) NOT NULL, duration VARCHAR(200) NOT NULL, PRIMARY KEY(id) );
+INSERT INTO trainings VALUES ( 1, "DevOps", "5 Days" );
+INSERT INTO trainings VALUES ( 2, "Microservices with Golang", "5 Days" );
+SELECT * FROM trainings;
+exit
+exit
+docker ps
 ```
+
+Let's delete the mysql-jegan container and recreate a new one
+```
+docker rm mysql-jegan
+docker run -d --name mysql-jegan --hostname mysql-jegan -e MYSQL_ROOT_PASSWORD=root@123 -v /tmp/jegan/mysql:/var/lib/mysql mysql:latest
+docker exec -it mysql-jegan /bin/sh
+mysql -u root -p
+SHOW DATABASES;
+USE tektutor;
+SHOW TABLES;
+SELECT * FROM trainings;
+exit
+exit
+```
+
+Though we delete the container and recreated a new one, we didn't lose the data because we stored the database in an external disk.
+This is how, containers are used in real-world applications.
