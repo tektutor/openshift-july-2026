@@ -290,6 +290,8 @@ oc describe pod/nginx-dbfb56c96-l296j
 # Editing a deployment and update its replicas from 3 to 5, save and exit
 oc edit deploy/nginx
 oc get pods
+
+oc get deploy/nginx -o yaml
 ```
 
 
