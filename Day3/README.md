@@ -54,6 +54,9 @@ oc create deploy nginx --image=image-registry.openshift-image-registry.svc:5000/
 # Deploy the nginx in declarative fashion
 oc create -f nginx-deploy.yml --save-config
 
+# In the template section of the nginx-deploy.yml add additional labels and apply
+oc apply -f nginx-deploy.yml
+
 # List the deploy,replicaset and pods
 oc get deploy,rs,po
 
