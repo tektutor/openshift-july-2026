@@ -143,5 +143,22 @@ curl http://master03.ocp4.palmeto.org:31728
 curl http://worker01.ocp4.palmeto.org:31728
 curl http://worker02.ocp4.palmeto.org:31728
 curl http://worker03.ocp4.palmeto.org:31728
+```
 
+## Lab - LoadBalancer service in declarative style
+```
+oc project jegan-project
+
+# Delete exisitng node port service
+oc delete -f nginx-nodeport-svc.yml
+
+# Create the LoadBalancer service in declarative style
+oc expose deploy/nginx --type=LoadBalancer --port=8080 --dry-run=client -o yaml > nginx-lb-svc.yml
+oc apply -f nginx-lb-svc.yml
+
+oc get svc
+oc describe svc/nginx # You need to find your loadbalancer service ip and use it below in the curl 
+
+# Testing the loadbalancer service
+curl http://192.168.100.50:8080
 ```
