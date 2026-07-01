@@ -99,7 +99,7 @@ Let's create the ClusterIP Internal service declaratively
 ```
 oc expose deploy/nginx --type=ClusterIP --port=8080 --dry-run=client -o yaml
 oc expose deploy/nginx --type=ClusterIP --port=8080 --dry-run=client -o yaml > nginx-clusterip-svc.yml
-oc apply -f nginx-clusterip-svc
+oc apply -f nginx-clusterip-svc.yml
 oc get svc
 oc describe svc/nginx
 ```
@@ -110,4 +110,28 @@ oc rsh pod/test-pod
 curl http://nginx:8080 # Service discovery - accessing service by its name
 curl http://nginx.jegan-project.svc.cluster.local:8080 # Recommended compared to previous command
 curl http://172.30.240.164:8080
+```
+
+## Lab - Creating an external NodePort service in declarative style
+```
+oc project jegan-project
+
+# Delete existing clusterip service before creating nodeport service
+oc delete -f nginx-clusterip-svc.yml
+
+oc expose deploy/nginx --type=NodePort --port=8080 --dry-run=client -o yaml
+oc expose deploy/nginx --type=NodePort --port=8080 --dry-run=client -o yaml > nginx-nodeport-svc.yml
+oc apply -f nginx-nodeport-svc.yml
+oc get svc
+oc describe svc/nginx
+```
+
+Let's test the nodeport external service
+```
+curl http://192.168.100.11:31728 # Master1 IP
+curl http://192.168.100.11:31728 # Master2 IP
+curl http://192.168.100.11:31728 # Master3 IP
+curl http://192.168.100.21:31728 # Worker1 IP
+curl http://192.168.100.22:31728 # Worker2 IP
+curl http://192.168.100.23:31728 # Worker3 IP
 ```
