@@ -56,4 +56,8 @@ oc create -f nginx-deploy.yml --save-config
 
 # List the deploy,replicaset and pods
 oc get deploy,rs,po
+
+## Delete the deployment declaratively
+oc delete -f nginx-deploy.yml
+oc get deploy,rs,po
 ```
