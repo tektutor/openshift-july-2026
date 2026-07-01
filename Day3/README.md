@@ -136,4 +136,12 @@ curl http://192.168.100.11:31728 # Master3 IP
 curl http://192.168.100.21:31728 # Worker1 IP
 curl http://192.168.100.22:31728 # Worker2 IP
 curl http://192.168.100.23:31728 # Worker3 IP
+
+curl http://master01.ocp4.palmeto.org:31728
+curl http://master02.ocp4.palmeto.org:31728
+curl http://master03.ocp4.palmeto.org:31728
+curl http://worker01.ocp4.palmeto.org:31728
+curl http://worker02.ocp4.palmeto.org:31728
+curl http://worker03.ocp4.palmeto.org:31728
+
 ```
