@@ -123,7 +123,7 @@ oc expose deploy/nginx --type=NodePort --port=8080 --dry-run=client -o yaml
 oc expose deploy/nginx --type=NodePort --port=8080 --dry-run=client -o yaml > nginx-nodeport-svc.yml
 oc apply -f nginx-nodeport-svc.yml
 oc get svc
-oc describe svc/nginx
+oc describe svc/nginx # Get the NodePort from this command and substitute below
 
 oc get nodes -o wide
 ```
