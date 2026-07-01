@@ -131,8 +131,8 @@ oc get nodes -o wide
 Let's test the nodeport external service
 ```
 curl http://192.168.100.11:31728 # Master1 IP
-curl http://192.168.100.11:31728 # Master2 IP
-curl http://192.168.100.11:31728 # Master3 IP
+curl http://192.168.100.12:31728 # Master2 IP
+curl http://192.168.100.13:31728 # Master3 IP
 curl http://192.168.100.21:31728 # Worker1 IP
 curl http://192.168.100.22:31728 # Worker2 IP
 curl http://192.168.100.23:31728 # Worker3 IP
