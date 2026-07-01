@@ -124,6 +124,8 @@ oc expose deploy/nginx --type=NodePort --port=8080 --dry-run=client -o yaml > ng
 oc apply -f nginx-nodeport-svc.yml
 oc get svc
 oc describe svc/nginx
+
+oc get nodes -o wide
 ```
 
 Let's test the nodeport external service
