@@ -64,3 +64,50 @@ oc get deploy,rs,po
 oc delete -f nginx-deploy.yml
 oc get deploy,rs,po
 ```
+
+## Lab - Creating a ClusterIP Internal Service in declarative style
+Create a pod.yml with code below
+<pre>
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: test
+  name: test-pod
+spec:
+  containers:
+  - image: image-registry.openshift-image-registry.svc:5000/openshift/hello:latest
+    imagePullPolicy: IfNotPresent
+    name: test  
+</pre>
+
+Create the test pod
+```
+oc project jegan-project
+oc apply -f pod.yml
+oc get pods
+```
+
+Let's create the nginx deployment in declarative style
+```
+oc create deploy nginx --image=image-registry.openshift-image-registry.svc:5000/openshift/bitnami-nginx:1.26 --replicas=3 --dry-run=client -o yaml
+oc create deploy nginx --image=image-registry.openshift-image-registry.svc:5000/openshift/bitnami-nginx:1.26 --replicas=3 --dry-run=client -o yaml > nginx-deploy.yml
+oc apply -f nginx-deploy.yml
+```
+
+Let's create the ClusterIP Internal service declaratively
+```
+oc expose deploy/nginx --type=ClusterIP --port=8080 --dry-run=client -o yaml
+oc expose deploy/nginx --type=ClusterIP --port=8080 --dry-run=client -o yaml > nginx-clusterip-svc.yml
+oc apply -f nginx-clusterip-svc
+oc get svc
+oc describe svc/nginx
+```
+
+Let's test the clusterip internal service using the test pod we created
+```
+oc rsh pod/test-pod
+curl http://nginx:8080 # Service discovery - accessing service by its name
+curl http://nginx.jegan-project.svc.cluster.local:8080 # Recommended compared to previous command
+curl http://172.30.240.164:8080
+```
