@@ -33,6 +33,7 @@
 - it is a very light-weight setup that works in laptop/dekstop with normal configurations
 - it is ideal setup for learning purpose
 - it is ideal for Dev/QA environment
+- it is not production-grade
 </pre>
 
 ## Info - Kubernetes
