@@ -128,7 +128,7 @@ oc describe svc/nginx # Get the NodePort from this command and substitute below
 oc get nodes -o wide
 ```
 
-Let's test the nodeport external service
+Let's test the nodeport external service ( don't need to run this inside pod shell )
 ```
 curl http://192.168.100.11:31728 # Master1 IP
 curl http://192.168.100.12:31728 # Master2 IP
