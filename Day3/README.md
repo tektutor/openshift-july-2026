@@ -36,3 +36,24 @@ Note
 - API Server receives these updates, retrieves the Pod database entry from etcd and updates the Pod status
 </pre>
 ![Openshift](openshift-internals.png)
+
+## Lab - Deploying a stateless application in declarative style
+```
+# Delete your existing project
+oc delete project jegan
+
+# Create a new project
+oc new-project jegan
+
+# Generate the declarative manifest file to deploy nginx
+oc create deploy nginx --image=image-registry.openshift-image-registry.svc:5000/openshift/bitnami-nginx:1.26 --replicas=3 --dry-run=client -o yaml
+
+# Redirect the output shown to a yaml file
+oc create deploy nginx --image=image-registry.openshift-image-registry.svc:5000/openshift/bitnami-nginx:1.26 --replicas=3 --dry-run=client -o yaml > nginx-deploy.yml
+
+# Deploy the nginx in declarative fashion
+oc create -f nginx-deploy.yml --save-config
+
+# List the deploy,replicaset and pods
+oc get deploy,rs,po
+```
