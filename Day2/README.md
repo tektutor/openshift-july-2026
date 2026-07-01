@@ -351,3 +351,16 @@ exit
 oc rsh deploy/nginx
 exit
 ```
+
+## Lab - Creating an internal clusterip service from your nginx deployment
+```
+oc project jegan-project
+oc get deploy -l app=nginx
+oc expose deploy/nginx --type=ClusterIP --port=8080
+
+oc get services
+oc get service
+oc get svc
+
+oc describe svc/nginx
+```
