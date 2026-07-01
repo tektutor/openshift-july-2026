@@ -68,6 +68,12 @@
 - In Kubernetes Master/Worker nodes, we can choose to install any Linux OS distribution (ubuntu, rocky, fedora, RHEL, etc., )
 </pre>
 
+## Info - Kubernetes High-Level Architecture
+![kubernetes](KubernetesArchitecture2.png)
+
+## Info - Red Hat Openshift High-Level Architecture
+![openshift](openshiftArchitecture.png)
+![openshift](master-node.png)
 
 ## Info - Red Hat Openshift
 <pre>
@@ -139,7 +145,6 @@ Finding IP Address of a Pod
   - DaemonSet
 </pre>
 
-
 ## Info - API Server
 <pre>
 - is the heart of kubernetes/openshift
@@ -193,7 +198,6 @@ Finding IP Address of a Pod
 cat ~/openshift.txt
 oc login --username=kubeadmin --password=VVnz6-ezZ9W-RVbw4-NPK3R https://api.ocp4.palmeto.org:6443 --insecure-skip-tls-verify
 ```
-
 
 ## Lab - Listing Nodes in Red Hat Openshift
 ```
