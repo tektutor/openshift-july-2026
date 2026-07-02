@@ -261,3 +261,33 @@ oc get pods
 
 # Then switch to Openshift webconsole Topolgy and click on the wordpress route(up arrow) to see the blog
 ```
+
+## Info - Helm Overview
+<pre>
+- helm is a package manager for Kubernetes & Openshift
+- helm is a Kubernetes/Openshift aware tool, hence it knows how to find the dependency and figure out the sequence in which
+  K8s/Openshift resources must be created
+- the helm packaged application is called Helm chart
+- Openshift comes with pre-integrated Helm support
+- However, we can deploy application from Helm Charts from command-line as well as from the Openshift webconsole
+</pre>
+
+## Lab -  Packaging wordpress multi-pod application as Helm chart and deploying into Openshift
+```
+cd ~
+mkdir -p wordpress-helm-chart
+cd wordpress-helm-chart
+
+helm version
+helm create wordpress
+tree
+cd wordpress/templates
+rm *
+rm -rf tests
+cp ~/openshift-july-2026/Day3/wordpress-helm-chart/manifest-scripts/*.yml .
+cd ..
+cp ~/openshift-july-2026/Day3/wordpress-helm-chart/values.yaml .
+tree
+
+helm package wordpress
+```
