@@ -15,6 +15,6 @@ spec:
         app: hello
     spec:
       containers:
-      - image: image-registry.openshift-image-registry.svc:5000/openshift/hello:1.0
+      - image: image-registry.openshift-image-registry.svc:5000/openshift/hello:latest
         name: hello 
         imagePullPolicy: IfNotPresent

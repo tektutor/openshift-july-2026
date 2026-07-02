@@ -15,6 +15,6 @@ spec:
         app: nginx
     spec:
       containers:
-      - image: image-registry.openshift-image-registry.svc:5000/openshift/nginx:1.29 
+      - image: image-registry.openshift-image-registry.svc:5000/openshift/bitnami-nginx:1.28 
         name: nginx
         imagePullPolicy: IfNotPresent
