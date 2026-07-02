@@ -33,6 +33,7 @@
 - it is a very light-weight setup that works in laptop/dekstop with normal configurations
 - it is ideal setup for learning purpose
 - it is ideal for Dev/QA environment
+- it is not production-grade
 </pre>
 
 ## Info - Kubernetes
@@ -68,6 +69,12 @@
 - In Kubernetes Master/Worker nodes, we can choose to install any Linux OS distribution (ubuntu, rocky, fedora, RHEL, etc., )
 </pre>
 
+## Info - Kubernetes High-Level Architecture
+![kubernetes](KubernetesArchitecture2.png)
+
+## Info - Red Hat Openshift High-Level Architecture
+![openshift](openshiftArchitecture.png)
+![openshift](master-node.png)
 
 ## Info - Red Hat Openshift
 <pre>
@@ -139,7 +146,6 @@ Finding IP Address of a Pod
   - DaemonSet
 </pre>
 
-
 ## Info - API Server
 <pre>
 - is the heart of kubernetes/openshift
@@ -193,7 +199,6 @@ Finding IP Address of a Pod
 cat ~/openshift.txt
 oc login --username=kubeadmin --password=VVnz6-ezZ9W-RVbw4-NPK3R https://api.ocp4.palmeto.org:6443 --insecure-skip-tls-verify
 ```
-
 
 ## Lab - Listing Nodes in Red Hat Openshift
 ```
@@ -345,4 +350,28 @@ exit
 
 oc rsh deploy/nginx
 exit
+```
+
+## Lab - Creating an internal clusterip service from your nginx deployment
+```
+oc project jegan-project
+oc get deploy -l app=nginx
+oc expose deploy/nginx --type=ClusterIP --port=8080
+
+oc get services
+oc get service
+oc get svc
+
+oc get endpoints
+
+oc describe svc/nginx
+
+oc scale deploy/nginx --replicas=8
+
+oc describe svc/nginx
+oc get endpoints
+
+oc scale deploy/nginx --replicas=3
+oc describe svc/nginx
+oc get endpoints
 ```
