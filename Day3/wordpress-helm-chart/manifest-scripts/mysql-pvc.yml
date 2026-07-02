@@ -11,4 +11,4 @@ spec:
   volumeMode: Filesystem
   resources:
     requests:
-      storage: {{.Values.msql_pv_size}} 
+      storage: {{.Values.mysql_pv_size}} 

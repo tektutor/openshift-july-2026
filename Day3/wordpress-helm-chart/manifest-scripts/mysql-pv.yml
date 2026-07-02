@@ -6,11 +6,11 @@ metadata:
     name: {{.Values.your_name}} 
 spec:
   capacity:
-    storage: {{.Values.msql_pv_size}} 
+    storage: {{.Values.mysql_pv_size}} 
   volumeMode: Filesystem
   accessModes:
   - ReadWriteOnce  # All the pods from a single node in the openshift cluster can read & write this external storage
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: {{.Values.nfs_server_ip}} 
-    path: {{.Values.nfs_msql_path}} 
+    path: {{.Values.nfs_mysql_path}} 
