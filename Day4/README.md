@@ -99,7 +99,7 @@ oc new-project jegan-project
 
 cd ~/openshift-july-2026
 git pull
-cd Day4/ingres
+cd Day4/ingress
 oc apply -f nginx-deploy.yml
 oc apply -f hello-deploy.yml
 oc apply -f nginx-svc.yml
