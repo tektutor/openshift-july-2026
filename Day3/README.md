@@ -239,3 +239,25 @@ curl http://nginx-jegan-project.apps.ocp4.palmeto.org
 - the applicaiton Pod that needs the store will refer the PVC name in the deployment, and it can request the external store
   to be mounted in its preferred mount point within the Pod
 </pre>
+
+## Lab - Deploy wordpress and mariadb multi-pod application
+```
+# Clone the TekTutor Training repository if you haven't done it already on the lab machine
+cd ~
+git clone https://github.com/tektutor/openshift-july-2026.git
+cd openshift-july-2026
+cd Day3/wordpress-with-configmaps-and-secrets
+# Ensure name 'jegan' is replaced with yours in all the yml file
+# Ensure /var/nfs/jegan/wordpress, /var/nfs/jegan/mysql is replaced with your linux user ( update mysql-pv.yml mysql-pvc.yml wordpress-pv.yml wordpress-pvc.yml )
+# Ensure NFS IP is updated to 192.168.10.201 in case you are working in server 2
+# Ensure mysql-deploy.yml update the pvc name with the one that you created
+# Ensure wordpress-deploy.yml update the pvc name with the one that you created
+
+oc delete project jegan-project
+oc new-project jegan-project
+./deploy.sh
+
+oc get pods
+
+# Then switch to Openshift webconsole Topolgy and click on the wordpress route(up arrow) to see the blog
+```
