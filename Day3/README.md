@@ -13,7 +13,7 @@ https://catalog.redhat.com/en/search?searchType=Containers
 ## Info - What happens internally in Openshift when we deploy an application
 ```
 oc project jegan-project
-oc create deploy nginx --image=docker.io/bitnami/nginx:1.26 --replicas=3
+oc create deploy nginx --image=image-registry.openshift-image-registry.svc:5000/openshift/bitnami-nginx:1.26 --replicas=3
 ```
 
 Note
@@ -161,4 +161,103 @@ oc describe svc/nginx # You need to find your loadbalancer service ip and use it
 
 # Testing the loadbalancer service
 curl http://192.168.100.50:8080
+```
+
+## Lab - Rolling update ( upgrading nginx from version 1.26 to 1.27 and later to 1.28 )
+
+Let's delete your exisitng project
+```
+oc delete project jegan-project
+```
+
+Let's create new project
+```
+oc new-project jegan-project
+oc create deploy nginx --image=image-registry.openshift-image-registry.svc:5000/openshift/bitnami-nginx:1.26 --replicas=3 --dry-run=client -o yaml > nginx-deploy.yml
+oc apply -f nginx-deploy.yml
+
+oc get pods -o yaml | grep image
+```
+
+## Lab - Create an external route for nginx service
+```
+# Delete existing project
+oc delete project jegan-project
+
+# Deploy nginx
+oc new-project jegan-project
+oc create deploy nginx --image=image-registry.openshift-image-registry.svc:5000/openshift/bitnami-nginx:1.26 --replicas=3 --dry-run=client -o yaml > nginx-deploy.yml
+oc apply -f nginx-deploy.yml
+
+# Create clusterip internal service for nginx deployment
+oc expose deploy/nginx --port=8080 --dry-run=client -o yaml > nginx-internal-svc.yml
+oc apply -f nginx-internal-svc.yml
+
+# Create an external route for internal service
+oc expose svc/nginx
+oc get route
+curl http://nginx-jegan-project.apps.ocp4.palmeto.org
+```
+
+## Info - ConfigMap
+<pre>
+- is a map that stores data in key/value format
+- instead of hard-coding, we store certain details like NFS Server IP, NFS Share Path, etc in the config map
+- generally used for storing this like
+  - JDK_HOME, MAVEN_HOME, LOG_PATH, etc.,
+- deployment can retrieve the details from the ConfigMap and use it
+- this is good for non-sensitive data
+</pre>
+
+## Info - Secrets
+<pre>
+- is also map that stores data in key/value format
+- it is used to store any sensitive confidential data like login credentials, certificates, etc.,
+</pre>
+
+## Info - Persistent Volume (PV)
+<pre>
+- is an external disk/storage 
+- this type of storage can come from NFS,NAS,AWS S3, etc.,
+- this is always created on the cluster-wide and accessible to all projects in the cluster
+- this can be provisioned manually by Administrators or can be provisioned on demand dynamically if there is a StorageClass
+- Generally in case of NFS 
+  - we need to mention NFS Server IP/Hostname
+  - Disk size required in MiB/GiB/TiB
+  - StorageClass ( Optional )
+  - Access 
+    - ReadWriteOnce
+    - ReadWriteMany
+</pre>
+
+## Info - Persistent Volume Claim (PVC)
+<pre>
+- a application that runs in a Pod will have to request for external storage in Openshift/Kubernetes by defining
+  its requirement in a Persistent Volume Claim
+- generally created by non-admin, usually the dev team and it is created in the project scope
+- If the Storage Controller is able to locate a matching Peristent Volume, then it let the PVC go and claim and use the PV
+- the applicaiton Pod that needs the store will refer the PVC name in the deployment, and it can request the external store
+  to be mounted in its preferred mount point within the Pod
+</pre>
+
+## Lab - Deploy wordpress and mariadb multi-pod application
+```
+# Clone the TekTutor Training repository if you haven't done it already on the lab machine
+cd ~
+git clone https://github.com/tektutor/openshift-july-2026.git
+cd openshift-july-2026
+cd Day3/wordpress-with-configmaps-and-secrets
+# Ensure name 'jegan' is replaced with yours in all the yml file
+# Ensure /var/nfs/jegan/wordpress, /var/nfs/jegan/mysql is replaced with your linux user ( update mysql-pv.yml mysql-pvc.yml wordpress-pv.yml wordpress-pvc.yml )
+# Ensure NFS IP is updated to 192.168.10.201 in case you are working in server 2
+# Ensure mysql-deploy.yml update the pvc name with the one that you created
+# Ensure wordpress-deploy.yml update the pvc name with the one that you created
+
+oc delete project jegan-project
+oc new-project jegan-project
+./deploy.sh
+
+oc get pods
+
+# Then switch to Openshift webconsole Topolgy and click on the wordpress route(up arrow) to see the blog
 ```
