@@ -1,0 +1,26 @@
+---
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  name: producer
+spec:
+  replicas: 1
+  selector:
+    app: producer
+  template:
+    metadata:
+      labels:
+        app: producer
+    spec:
+      containers:
+       - name: producer
+         image: image-registry.openshift-image-registry.svc:5000/jms-demo/jms-producer:latest
+  triggers:
+   - type: ImageChange
+     imageChangeParams:
+       automatic: true
+       containerNames:
+       - producer
+       from:
+         kind: ImageStreamTag
+         name: jms-producer:latest

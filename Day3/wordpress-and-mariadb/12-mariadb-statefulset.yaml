@@ -1,0 +1,154 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mariadb
+  labels:
+    app: mariadb
+spec:
+  serviceName: mariadb
+  replicas: 3
+  podManagementPolicy: OrderedReady
+  selector:
+    matchLabels:
+      app: mariadb
+  template:
+    metadata:
+      labels:
+        app: mariadb
+    spec:
+      serviceAccountName: wp-mariadb-sa
+      terminationGracePeriodSeconds: 60
+      initContainers:
+        # Writes a unique server_id per pod and marks replicas read-only.
+        - name: init-config
+          image: docker.io/library/mariadb:11.4
+          command:
+            - bash
+            - -c
+            - |
+              set -e
+              ORD="${HOSTNAME##*-}"
+              cp /common/common.cnf /conf.d/common.cnf
+              {
+                echo "[mariadbd]"
+                echo "server_id=$((ORD + 10))"
+                echo "report_host=${HOSTNAME}.mariadb"
+                if [ "$ORD" -ne 0 ]; then echo "read_only=ON"; fi
+              } > /conf.d/server-id.cnf
+              echo "wrote config for ordinal $ORD"
+          volumeMounts:
+            - name: conf-d
+              mountPath: /conf.d
+            - name: common-config
+              mountPath: /common
+      containers:
+        - name: mariadb
+          image: docker.io/library/mariadb:11.4
+          ports:
+            - name: mysql
+              containerPort: 3306
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mariadb-secret
+                  key: MYSQL_ROOT_PASSWORD
+          volumeMounts:
+            - name: mariadb-data
+              mountPath: /var/lib/mysql
+              # Per-pod datadir: /var/nfs/jegan/mysql/mariadb-0, mariadb-1, ...
+              subPathExpr: $(POD_NAME)
+            - name: conf-d
+              mountPath: /etc/mysql/conf.d
+            - name: mysql-run
+              mountPath: /run/mysqld
+          resources:
+            requests:
+              cpu: 300m
+              memory: 512Mi
+            limits:
+              cpu: "1"
+              memory: 1Gi
+          livenessProbe:
+            exec:
+              command:
+                - bash
+                - -c
+                - "mysqladmin --socket=/run/mysqld/mysqld.sock -uroot -p\"$MYSQL_ROOT_PASSWORD\" ping"
+            initialDelaySeconds: 40
+            periodSeconds: 15
+            timeoutSeconds: 5
+          readinessProbe:
+            exec:
+              command:
+                - bash
+                - -c
+                - "mysqladmin --socket=/run/mysqld/mysqld.sock -uroot -p\"$MYSQL_ROOT_PASSWORD\" ping"
+            initialDelaySeconds: 25
+            periodSeconds: 10
+            timeoutSeconds: 5
+        # Sidecar assigns primary/replica role from the pod ordinal.
+        - name: replication-bootstrap
+          image: docker.io/library/mariadb:11.4
+          command: ["bash", "/scripts/bootstrap.sh"]
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mariadb-secret
+                  key: MYSQL_ROOT_PASSWORD
+            - name: MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: mariadb-secret
+                  key: MYSQL_DATABASE
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mariadb-secret
+                  key: MYSQL_USER
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mariadb-secret
+                  key: MYSQL_PASSWORD
+            - name: REPL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mariadb-secret
+                  key: REPL_USER
+            - name: REPL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mariadb-secret
+                  key: REPL_PASSWORD
+          volumeMounts:
+            - name: mysql-run
+              mountPath: /run/mysqld
+            - name: mariadb-scripts
+              mountPath: /scripts
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
+      volumes:
+        - name: mariadb-data
+          persistentVolumeClaim:
+            claimName: mariadb-nfs-pvc
+        - name: conf-d
+          emptyDir: {}
+        - name: mysql-run
+          emptyDir: {}
+        - name: common-config
+          configMap:
+            name: mariadb-config
+        - name: mariadb-scripts
+          configMap:
+            name: mariadb-scripts

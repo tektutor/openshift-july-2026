@@ -1,0 +1,17 @@
+# Headless service gives each pod stable DNS: mariadb-0.mariadb, mariadb-1.mariadb.
+# Replicas find the primary at mariadb-0.mariadb; WordPress uses the same name.
+apiVersion: v1
+kind: Service
+metadata:
+  name: mariadb
+  labels:
+    app: mariadb
+spec:
+  clusterIP: None
+  publishNotReadyAddresses: true
+  selector:
+    app: mariadb
+  ports:
+    - name: mysql
+      port: 3306
+      targetPort: 3306

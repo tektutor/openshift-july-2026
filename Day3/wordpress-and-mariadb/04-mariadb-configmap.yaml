@@ -1,0 +1,18 @@
+# Common MariaDB settings applied to every node. server_id is NOT here; the
+# init container writes a unique one per pod from the ordinal.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mariadb-config
+data:
+  common.cnf: |
+    [mariadbd]
+    log_bin=mariadb-bin
+    log_basename=mariadb
+    binlog_format=ROW
+    log_slave_updates=ON
+    gtid_strict_mode=ON
+    gtid_domain_id=1
+    expire_logs_days=7
+    skip_name_resolve=ON
+    max_connections=300

@@ -1,0 +1,25 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  name: consumer
+spec:
+  replicas: 1
+  selector:
+    app: consumer
+  template:
+    metadata:
+      labels:
+        app: consumer
+    spec:
+      containers:
+      - name: consumer
+        image: image-registry.openshift-image-registry.svc:5000/jms-demo/jms-consumer:latest
+  triggers:
+   - type: ImageChange
+     imageChangeParams:
+       automatic: true
+       containerNames:
+       - consumer
+       from:
+         kind: ImageStreamTag
+         name: jms-consumer:latest

@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: wordpress-config
+data:
+  # WordPress writes to the primary (mariadb-0). Replicas serve as live
+  # standbys. For read splitting you would put ProxySQL or MaxScale in front.
+  WORDPRESS_DB_HOST: "mariadb-0.mariadb:3306"
+  WORDPRESS_DB_NAME: "wordpress"
+  WORDPRESS_DB_USER: "wpuser"
+  WORDPRESS_TABLE_PREFIX: "wp_"

@@ -1,0 +1,12 @@
+# Single declared place for the NFS server and export paths.
+# NOTE: a PersistentVolume cannot read these fields from a ConfigMap, so
+# deploy.sh stamps these values into 07-pv-mariadb.yaml and 08-pv-wordpress.yaml
+# before applying them. Edit here, then run deploy.sh.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nfs-config
+data:
+  nfs-server: "192.168.10.200"
+  mariadb-nfs-path: "/var/nfs/jegan/mysql"
+  wordpress-nfs-path: "/var/nfs/jegan/wordpress"

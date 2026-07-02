@@ -1,0 +1,21 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: jms-producer 
+  labels:
+    name: jms-producer 
+spec:
+  triggers:
+  - type: ConfigChange
+  source:
+    type: Git
+    git:
+      uri: "https://github.com/tektutor/openshift-feb-2026.git"
+      ref: main
+    contextDir: "Day5/jms-demo/producer"
+  strategy:
+    type: Docker
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'jms-producer:latest'

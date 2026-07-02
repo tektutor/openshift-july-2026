@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jms-app-config
+  namespace: jms-demo
+data:
+  application.yml: |
+    spring:
+      activemq:
+        broker-url: tcp://amq-broker-hdls-svc:61616
+        user: admin
+        password: admin
+      jms:
+        pub-sub-domain: false
+    logging:
+      level:
+        com.example.jms: DEBUG  

@@ -1,0 +1,35 @@
+- name: This playbook will build and push the custom image to docker hub remote registry
+  hosts: localhost
+  tasks:
+  - name: Create producer image stream in Openshift Internal Image Registry
+    shell: oc apply -f jms-producer-is.yml
+
+  - name: Create consumer image stream in Openshift Internal Image Registry
+    shell: oc apply -f jms-consumer-is.yml
+
+  - name: Delete the producer build config
+    shell: oc delete -f bc/jms-producer
+    ignore_errors: true
+
+  - name: Delete the consumer build config
+    shell: oc delete -f bc/jms-consumer
+    ignore_errors: true
+
+  - name: Build custom docker image for JMS Producer Microservice
+    shell: oc apply -f producer-build-config.yml
+
+  - name: Start producer image build
+    shell: oc start-build jms-producer
+  
+  - name: Build custom docker image for JMS Consumer Microservice
+    shell: oc apply -f consumer-build-config.yml
+
+  - name: Start consumer image build
+    shell: oc start-build jms-consumer
+
+  - name: Deploy producer microservice
+    shell: oc apply -f deploy-producer.yml
+
+  - name: Deploy consumer microservice
+    shell: oc apply -f deploy-consumer.yml
+

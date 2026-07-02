@@ -1,0 +1,9 @@
+apiVersion: broker.amq.io/v1beta1
+kind: ActiveMQArtemisAddress
+metadata:
+  name: order-queue
+  namespace: jms-demo
+spec:
+  addressName: order.queue
+  queueName: order.queue
+  routingType: anycast  
