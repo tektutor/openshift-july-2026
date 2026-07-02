@@ -162,3 +162,39 @@ oc describe svc/nginx # You need to find your loadbalancer service ip and use it
 # Testing the loadbalancer service
 curl http://192.168.100.50:8080
 ```
+
+## Lab - Rolling update ( upgrading nginx from version 1.26 to 1.27 and later to 1.28 )
+
+Let's delete your exisitng project
+```
+oc delete project jegan-project
+```
+
+Let's create new project
+```
+oc new-project jegan-project
+oc create deploy nginx --image=image-registry.openshift-image-registry.svc:5000/openshift/bitnami-nginx:1.26 --replicas=3 --dry-run=client -o yaml > nginx-deploy.yml
+oc apply -f nginx-deploy.yml
+
+oc get pods -o yaml | grep image
+```
+
+## Lab - Create an external route for nginx service
+```
+# Delete existing project
+oc delete project jegan-project
+
+# Deploy nginx
+oc create deploy nginx --image=image-registry.openshift-image-registry.svc:5000/openshift/bitnami-nginx:1.26 --replicas=3 --dry-run=client -o yaml > nginx-deploy.yml
+oc apply -f nginx-deploy.yml
+
+# Create clusterip internal service for nginx deployment
+oc expose deploy/nginx --port=8080 --dry-run=client -o yaml > nginx-internal-svc.yml
+oc apply -f nginx-internal-svc.yml
+
+# Create an external route for internal service
+oc expose svc/nginx
+oc get route
+curl http://nginx-jegan-project.apps.ocp4.palmeto.org
+```
+
