@@ -69,6 +69,7 @@ oc get pods -o wide # now all your nginx pods should be running in worker01
 ## Lab - Ingress
 Note
 <pre>
+- Ingress is a way to make our application accessible outside the cluster with public url
 - Ingress is not Service, it is routing(forwarding) set of rules
 - In your openshift cluster, depending on which Load Balancer is setup by your Openshift Cluster Administrator, we
   need to use either
@@ -82,4 +83,32 @@ Note
 - HAProxy Ingress Controller only know how to configure a HAProxy Load Balancer
 - Nginx Ingress Controller knows only how to configure a Nginx Load Balancer
 - It is also important that our Ingress annotation mentions the Ingress Controller that should manage our Ingress
+- Ingress is not a service
+  - as Ingress will forward the call to one of the service based on rule defined in the Ingress
+  - in other words, the backend of Ingress is set of services ( CluterIP, NodePort or LoadBalancer Services )
+  - Ingress represents a group of Services
+- Service ( ClusterIP, NodePort or LoadBalancer )
+  - Service represents a group of load-balanced pods
+  - the backend of these services are Pods
 </pre>
+
+Let's delete and recreate a new project
+```
+oc delete project jegan-project
+oc new-project jegan-project
+
+cd ~/openshift-july-2026
+git pull
+cd Day4/ingres
+oc apply -f nginx-deploy.yml
+oc apply -f hello-deploy.yml
+oc apply -f nginx-svc.yml
+oc apply -f hello-svc.yml
+oc describe svc/nginx
+oc describe svc/hello
+oc apply -f ingress.yml
+oc get ingress
+
+curl http://tektutor.apps.ocp4.palmeto.org/hello
+curl http://tektutor.apps.ocp4.palmeto.org/nginx
+```
