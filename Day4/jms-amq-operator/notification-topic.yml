@@ -1,0 +1,9 @@
+apiVersion: broker.amq.io/v1beta1
+kind: ActiveMQArtemisAddress
+metadata:
+  name: notification-topic
+  namespace: jms-demo
+spec:
+  addressName: notification.topic
+  queueName: notification.topic
+  routingType: multicast  

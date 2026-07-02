@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cron-job
+spec:
+  #schedule: "53 11 27 6 *" #CRON schedule - will run every year at 11:53 am on Thursday, 27th June 
+  schedule: "*/2 * * * *" #CRON schedule - will run every 2 minutes 
+  timeZone: "Asia/Calcutta"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: my-cron-container
+            image: alpine:latest
+            command: ["sh", "-c", "echo Hello"]
+          restartPolicy: OnFailure
