@@ -287,7 +287,16 @@ rm -rf tests
 cp ~/openshift-july-2026/Day3/wordpress-helm-chart/manifest-scripts/*.yml .
 cd ..
 cp ~/openshift-july-2026/Day3/wordpress-helm-chart/values.yaml .
-tree
+cd ..
+tree wordpress
 
 helm package wordpress
+helm install worpress wordpress-0.1.0.tgz
+oc get pods
+
+# Switch to your openshift webconsole topology in your project
+
+# Once you are done you may undeploy
+helm list
+helm uninstall wordpress 
 ```
