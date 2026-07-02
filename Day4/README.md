@@ -64,8 +64,22 @@ oc get pods -o wide # all pods are supposed to be in Pending as scheduler couldn
 # Label one of the worker node with disk=ssd
 oc label node/worker01.ocp4.palmeto.org disk=ssd
 oc get pods -o wide # now all your nginx pods should be running in worker01
-
-
-
-
 ```
+
+## Lab - Ingress
+Note
+<pre>
+- Ingress is not Service, it is routing(forwarding) set of rules
+- In your openshift cluster, depending on which Load Balancer is setup by your Openshift Cluster Administrator, we
+  need to use either
+  1. HAProxy Ingress Controller or
+  2. Nginx Ingress Controller or
+  3. F5 Ingress Controller, etc
+- Whenever we create an Ingress resource, the Ingress Controller that is active in the cluster will keep monitoring
+  for the Ingress resource created in any project within the cluster
+- Whenever the Controller detects such a Route, it picks the rules mentioned in the Ingress resource and configures
+  a Load Balancer
+- HAProxy Ingress Controller only know how to configure a HAProxy Load Balancer
+- Nginx Ingress Controller knows only how to configure a Nginx Load Balancer
+- It is also important that our Ingress annotation mentions the Ingress Controller that should manage our Ingress
+</pre>
