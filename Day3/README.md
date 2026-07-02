@@ -185,6 +185,7 @@ oc get pods -o yaml | grep image
 oc delete project jegan-project
 
 # Deploy nginx
+oc new-project jegan-project
 oc create deploy nginx --image=image-registry.openshift-image-registry.svc:5000/openshift/bitnami-nginx:1.26 --replicas=3 --dry-run=client -o yaml > nginx-deploy.yml
 oc apply -f nginx-deploy.yml
 
