@@ -199,3 +199,43 @@ oc get route
 curl http://nginx-jegan-project.apps.ocp4.palmeto.org
 ```
 
+## Info - ConfigMap
+<pre>
+- is a map that stores data in key/value format
+- instead of hard-coding, we store certain details like NFS Server IP, NFS Share Path, etc in the config map
+- generally used for storing this like
+  - JDK_HOME, MAVEN_HOME, LOG_PATH, etc.,
+- deployment can retrieve the details from the ConfigMap and use it
+- this is good for non-sensitive data
+</pre>
+
+## Info - Secrets
+<pre>
+- is also map that stores data in key/value format
+- it is used to store any sensitive confidential data like login credentials, certificates, etc.,
+</pre>
+
+## Info - Persistent Volume (PV)
+<pre>
+- is an external disk/storage 
+- this type of storage can come from NFS,NAS,AWS S3, etc.,
+- this is always created on the cluster-wide and accessible to all projects in the cluster
+- this can be provisioned manually by Administrators or can be provisioned on demand dynamically if there is a StorageClass
+- Generally in case of NFS 
+  - we need to mention NFS Server IP/Hostname
+  - Disk size required in MiB/GiB/TiB
+  - StorageClass ( Optional )
+  - Access 
+    - ReadWriteOnce
+    - ReadWriteMany
+</pre>
+
+## Info - Persistent Volume Claim (PVC)
+<pre>
+- a application that runs in a Pod will have to request for external storage in Openshift/Kubernetes by defining
+  its requirement in a Persistent Volume Claim
+- generally created by non-admin, usually the dev team and it is created in the project scope
+- If the Storage Controller is able to locate a matching Peristent Volume, then it let the PVC go and claim and use the PV
+- the applicaiton Pod that needs the store will refer the PVC name in the deployment, and it can request the external store
+  to be mounted in its preferred mount point within the Pod
+</pre>
